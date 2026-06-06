@@ -1,0 +1,206 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-void: var(--void);
+  --color-void-deep: var(--void-deep);
+  --color-mist: var(--mist);
+  --color-ash: var(--ash);
+  --color-bone: var(--bone);
+  --color-iris: var(--iris);
+  --color-prism-a: var(--prism-a);
+  --color-prism-b: var(--prism-b);
+  --color-prism-c: var(--prism-c);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-display: "Archivo Narrow", "Bebas Neue", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.25rem;
+  /* Deep textured void — not pure black */
+  --void-deep: oklch(0.08 0.012 270);
+  --void: oklch(0.11 0.014 270);
+  --background: oklch(0.09 0.013 270);
+  --foreground: oklch(0.94 0.005 270);
+  --mist: oklch(0.62 0.012 270);
+  --ash: oklch(0.32 0.012 270);
+  --bone: oklch(0.96 0.006 90);
+
+  /* Liquid light — iridescent prism spectrum */
+  --iris: oklch(0.78 0.18 295);
+  --prism-a: oklch(0.82 0.19 200);   /* cyan */
+  --prism-b: oklch(0.80 0.22 330);   /* magenta */
+  --prism-c: oklch(0.88 0.20 95);    /* gold */
+
+  --card: oklch(0.12 0.014 270);
+  --card-foreground: oklch(0.94 0.005 270);
+  --popover: oklch(0.11 0.014 270);
+  --popover-foreground: oklch(0.94 0.005 270);
+  --primary: oklch(0.94 0.005 270);
+  --primary-foreground: oklch(0.09 0.013 270);
+  --secondary: oklch(0.16 0.014 270);
+  --secondary-foreground: oklch(0.94 0.005 270);
+  --muted: oklch(0.16 0.014 270);
+  --muted-foreground: oklch(0.62 0.012 270);
+  --accent: oklch(0.20 0.04 295);
+  --accent-foreground: oklch(0.94 0.005 270);
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.22 0.012 270);
+  --input: oklch(0.22 0.012 270);
+  --ring: oklch(0.78 0.18 295);
+}
+
+.dark { color-scheme: dark; }
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html, body {
+    background-color: var(--color-void-deep);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Textured void — subtle grain over deep space */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% 0%, oklch(0.18 0.04 295 / 0.35), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 100% 100%, oklch(0.18 0.04 200 / 0.18), transparent 60%);
+    mix-blend-mode: screen;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.18;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  ::selection {
+    background: var(--color-iris);
+    color: var(--color-void-deep);
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-mono { font-family: var(--font-mono); }
+  .font-sans { font-family: var(--font-sans); }
+
+  .text-mist { color: var(--color-mist); }
+  .text-ash { color: var(--color-ash); }
+  .text-bone { color: var(--color-bone); }
+  .bg-void { background-color: var(--color-void); }
+  .bg-void-deep { background-color: var(--color-void-deep); }
+
+  /* Prismatic liquid-light gradient — used for hover/interactivity */
+  .prism-gradient {
+    background: linear-gradient(
+      110deg,
+      var(--color-prism-a) 0%,
+      var(--color-iris) 35%,
+      var(--color-prism-b) 65%,
+      var(--color-prism-c) 100%
+    );
+  }
+  .prism-text {
+    background: linear-gradient(110deg,
+      var(--color-prism-a), var(--color-iris), var(--color-prism-b), var(--color-prism-c));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: prism-shift 8s linear infinite;
+  }
+  @keyframes prism-shift {
+    to { background-position: 200% 0; }
+  }
+
+  /* Emergence — assets emerge from the void rather than fade */
+  .emerge {
+    opacity: 0;
+    filter: blur(24px) brightness(0.4);
+    transform: translateY(40px) scale(0.98);
+    transition:
+      opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .emerge.is-visible {
+    opacity: 1;
+    filter: blur(0) brightness(1);
+    transform: translateY(0) scale(1);
+  }
+
+  /* Light mask over assets */
+  .light-mask {
+    position: relative;
+    isolation: isolate;
+  }
+  .light-mask::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at var(--mx, 50%) var(--my, 50%),
+      oklch(1 0 0 / 0.12) 0%,
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: 3;
+  }
+  .light-mask:hover::after { opacity: 1; }
+
+  .void-glow {
+    box-shadow:
+      0 0 0 1px oklch(1 0 0 / 0.04),
+      0 30px 80px -20px oklch(0 0 0 / 0.9),
+      0 0 120px -40px oklch(0.78 0.18 295 / 0.25);
+  }
+
+  .hairline { border-color: oklch(1 0 0 / 0.08); }
+
+  /* Magnetic menu items use will-change for smooth GSAP transforms */
+  .magnetic { display: inline-block; will-change: transform; }
+}
